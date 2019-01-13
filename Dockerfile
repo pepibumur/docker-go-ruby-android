@@ -185,6 +185,7 @@ RUN set -ex \
 	&& autoconf \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
 	&& ./configure \
+    --with-openssl \
 		--build="$gnuArch" \
 		--disable-install-doc \
 		--enable-shared \
