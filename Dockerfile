@@ -1,5 +1,4 @@
 FROM openjdk:8-jdk-slim
-LABEL maintainer="marc@circleci.com"
 
 ### ANDROID
 ### https://github.com/CircleCI-Public/example-images/blob/master/android/Dockerfile
