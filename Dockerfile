@@ -81,8 +81,6 @@ RUN groupadd --gid 3434 circleci \
 # BEGIN IMAGE CUSTOMIZATIONS
 # END IMAGE CUSTOMIZATIONS
 
-# Now commands run as user `circleci`
-
 # Switching user can confuse Docker's idea of $HOME, so we set it explicitly
 ENV HOME /home/circleci
 
@@ -117,17 +115,6 @@ RUN sudo apt-get update && \
         xvfb lib32z1 lib32stdc++6 build-essential \
         libcurl4-openssl-dev libglu1-mesa libxi-dev libxmu-dev \
         libglu1-mesa-dev
-
-# Install Ruby
-RUN cd /tmp && wget -O ruby-install-0.6.1.tar.gz https://github.com/postmodern/ruby-install/archive/v0.6.1.tar.gz && \
-    tar -xzvf ruby-install-0.6.1.tar.gz && \
-    cd ruby-install-0.6.1 && \
-    sudo make install && \
-    ruby-install --cleanup ruby 2.4.3 && \
-    rm -r /tmp/ruby-install-*
-
-ENV PATH ${HOME}/.rubies/ruby-2.4.3/bin:${PATH}
-RUN echo 'gem: --env-shebang --no-rdoc --no-ri' >> ~/.gemrc && gem install bundler
 
 # Download and install Android SDK
 RUN sudo mkdir -p ${android_home} && \
@@ -235,10 +222,8 @@ ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-WORKDIR $GOPATH
 
 ### RUBY
-
 
 # skip installing gem documentation
 RUN mkdir -p /usr/local/etc \
@@ -352,4 +337,7 @@ ENV PATH $GEM_HOME/bin:$BUNDLE_PATH/gems/bin:$PATH
 RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
 # (BUNDLE_PATH = GEM_HOME, no need to mkdir/chown both)
 
+## LAST STEPS
+
+WORKDIR $GOPATH
 USER circleci
