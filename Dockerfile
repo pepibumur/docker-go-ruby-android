@@ -192,7 +192,10 @@ RUN set -ex \
 	&& cd / \
 	&& rm -r /usr/src/ruby \
 	# rough smoke test
-	&& ruby --version && gem --version && bundle --version
+	&& ruby --version && gem --version && bundle --version \
+	&& gem install bundler -v 2.0.1 \
+	&& gem install bundler -v 2.0.1 \
+	&& gem install bundler -v 1.17.3
 ENV GEM_HOME /usr/local/bundle
 ENV BUNDLE_PATH="$GEM_HOME" \
 	BUNDLE_SILENCE_ROOT_WARNING=1 \
