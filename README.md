@@ -6,7 +6,7 @@
 
 | Image Tag | Ruby version | Golang version | Android version |
 | --------- | ------------ | -------------- | --------------- |
-| 1.0.3     | 2.6.0        | 1.13.1         | 23              |
+| 1.1.2     | 2.6.0        | 1.13.1         | 23              |
 
 ## References
 

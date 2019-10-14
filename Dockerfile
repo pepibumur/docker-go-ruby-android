@@ -46,6 +46,8 @@ RUN groupadd --gid 3434 circleci \
 	&& echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
 ENV HOME /home/circleci
 RUN sudo apt-get update -qqy && sudo apt-get install -qqy \
+  openssl \
+  libssl-dev \
 	python-dev \
 	python-setuptools \
 	apt-transport-https \
@@ -192,16 +194,18 @@ RUN set -ex \
 	&& cd / \
 	&& rm -r /usr/src/ruby \
 	# rough smoke test
-	&& ruby --version && gem --version && bundle --version \
-	&& gem install bundler -v 2.0.1 \
-	&& gem install bundler -v 2.0.1 \
-	&& gem install bundler -v 1.17.3
+	&& ruby --version && gem --version && bundle --version
+
 ENV GEM_HOME /usr/local/bundle
 ENV BUNDLE_PATH="$GEM_HOME" \
 	BUNDLE_SILENCE_ROOT_WARNING=1 \
 	BUNDLE_APP_CONFIG="$GEM_HOME"
 ENV PATH $GEM_HOME/bin:$BUNDLE_PATH/gems/bin:$PATH
 RUN mkdir -p "$GEM_HOME" && chmod 777 "$GEM_HOME"
+
+RUN gem install bundler -v 1.17.3
+RUN gem install bundler -v 2.0.1
+RUN gem install bundler -v 2.0.2
 
 ### LAST
 WORKDIR $GOPATH
